@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="aCn-Dq-bva">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -23,14 +23,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Zv-8e-8Xk">
-                                <rect key="frame" x="63" y="175" width="249" height="30"/>
+                                <rect key="frame" x="63" y="219" width="249" height="30"/>
                                 <state key="normal" title="Create user with Mail/Pass"/>
                                 <connections>
                                     <action selector="signinMailPass:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QOp-HS-0vn"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCa-y5-OR4">
-                                <rect key="frame" x="63" y="219" width="249" height="30"/>
+                                <rect key="frame" x="63" y="263" width="249" height="30"/>
                                 <state key="normal" title="Sign in"/>
                                 <connections>
                                     <action selector="loginUser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hBX-Yk-tcl"/>
@@ -56,8 +56,27 @@
                             <constraint firstItem="6Zv-8e-8Xk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="155" id="z1x-EW-gB9"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Zvu-z7-hiO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1079.2" y="138.98050974512745"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="o88-rC-cm7">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aCn-Dq-bva" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="OF4-wf-8Pg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="es5-5l-FcX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ojq-Jj-nZ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="140" y="138.98050974512745"/>
         </scene>
