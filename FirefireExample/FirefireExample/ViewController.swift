@@ -24,6 +24,20 @@ class ViewController: UIViewController {
         
         handle = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
             print("\(#function) ---- <USER> \(user?.email) <USER>")
+            if let _ = user {
+                let uid = user?.uid
+                let email = user?.email!
+                // let photoUrl = user?.photoURL // aun no tenemos foto ... lo dejamos para la parte de Storage
+                let provider = user?.providerID
+                print("+++++++++++ ---- <USER> uid: \(uid) \n email: \(email) \n provider: \(provider) <USER>")
+                user?.getTokenWithCompletion({ (token, error) in
+                    if let _ = error {
+                        print("tenemos un error -> \(error?.localizedDescription)")
+                    } else {
+                        print("+++++++++++ ---- <USER> Token: \(token!) <USER>")
+                    }
+                })
+            }
         })
     }
     
