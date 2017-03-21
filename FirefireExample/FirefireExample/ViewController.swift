@@ -23,21 +23,9 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         
         handle = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+            
             print("\(#function) ---- <USER> \(user?.email) <USER>")
-            if let _ = user {
-                let uid = user?.uid
-                let email = user?.email!
-                // let photoUrl = user?.photoURL // aun no tenemos foto ... lo dejamos para la parte de Storage
-                let provider = user?.providerID
-                print("+++++++++++ ---- <USER> uid: \(uid) \n email: \(email) \n provider: \(provider) <USER>")
-                user?.getTokenWithCompletion({ (token, error) in
-                    if let _ = error {
-                        print("tenemos un error -> \(error?.localizedDescription)")
-                    } else {
-                        print("+++++++++++ ---- <USER> Token: \(token!) <USER>")
-                    }
-                })
-            }
+            self.getUserInfo(user)
         })
     }
     
@@ -54,14 +42,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func signinMailPass(_ sender: Any) {
-        FIRAuth.auth()?.createUser(withEmail: "juan@midominio.com", password: "12345678", completion: { (user, error) in
-            if let _ = error {
-                print("tenemos un error -> \(error?.localizedDescription)")
-                return
-            }
-            
-            print("\(user)")
-        })
+        showUserLoginDialog()
     }
     
     @IBAction func loginUser(_ sender: Any) {
@@ -77,9 +58,110 @@ class ViewController: UIViewController {
         })
     
     }
+    @IBAction func logOut(_ sender: Any) {
+        do {
+            try FIRAuth.auth()?.signOut()
+            self.title = ""
+        } catch let error {
+            print("\(error.localizedDescription)")
+        }
+    }
     
     // MARK: Obtener info de usuario logado
     
+    fileprivate func getUserInfo(_ user: FIRUser!) {
+        if let _ = user {
+            let uid = user?.uid
+            let email = user?.email!
+            self.title = email
+            // let photoUrl = user?.photoURL // aun no tenemos foto ... lo dejamos para la parte de Storage
+            let provider = user?.providerID
+            print("+++++++++++ ---- <USER> uid: \(uid) \n email: \(email) \n provider: \(provider) <USER>")
+            user?.getTokenWithCompletion({ (token, error) in
+                if let _ = error {
+                    print("tenemos un error -> \(error?.localizedDescription)")
+                } else {
+                    print("+++++++++++ ---- <USER> Token: \(token!) <USER>")
+                }
+            })
+        }
+    }
+    
+    fileprivate func showUserLoginDialog() {
+        let alertController = UIAlertController(title: "FireFireExample", message: "Login", preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "Login", style: .default, handler: { (action) in
+            let eMailtxt = (alertController.textFields?[0])! as UITextField
+            let passTxt = (alertController.textFields?[1])! as UITextField
+            
+            if (eMailtxt.text?.isEmpty)!, (passTxt.text?.isEmpty)! {
+                // no hacemos nada
+            } else {
+                // tratamos los datos
+                self.createNewUser(eMailtxt.text!, andPass: passTxt.text!)
+            }
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            
+        }))
+        
+        alertController.addTextField { (txtField) in
+            txtField.placeholder = "por favor escriba su email"
+            txtField.textAlignment = .natural
+        }
+        
+        alertController.addTextField { (txtField) in
+            txtField.placeholder = "su password"
+            txtField.textAlignment = .natural
+            txtField.isSecureTextEntry = true
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    fileprivate func createNewUser(_ name: String, andPass pass: String) {
+        FIRAuth.auth()?.createUser(withEmail: name, password: pass, completion: { (user, error) in
+            if let _ = error {
+                print("tenemos un error -> \(error?.localizedDescription)")
+                return
+            }
+            
+            print("\(user)")
+        })
+
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
