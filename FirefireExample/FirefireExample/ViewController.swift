@@ -50,18 +50,13 @@ class ViewController: UIViewController {
     @IBAction func registerUser(_ sender: Any) {
         showUserLoginDialog(withCommand: createNewUser, userAction: .toSignIn)
     }
-    @IBAction func signinMailPass(_ sender: Any) {
-    }
-    
-    @IBAction func loginUser(_ sender: Any) {
-        showUserLoginDialog(withCommand: login, userAction: .toLogin)
-    }
+
     @IBAction func logOut(_ sender: Any) {
-        do {
-            try FIRAuth.auth()?.signOut()
-            self.title = ""
-        } catch let error {
-            print("\(error.localizedDescription)")
+        
+        if let _ = FIRAuth.auth()?.currentUser {
+            logOut()
+        } else {
+            showUserLoginDialog(withCommand: login, userAction: .toLogin)
         }
     }
     
@@ -74,6 +69,8 @@ class ViewController: UIViewController {
             self.title = email
             // let photoUrl = user?.photoURL // aun no tenemos foto ... lo dejamos para la parte de Storage
             let provider = user?.providerID
+            // vamos a cambiar el texto del boton login/out en funcion del estado
+            loginOutBtn.title = "logout"
             print("+++++++++++ ---- <USER> uid: \(uid) \n email: \(email) \n provider: \(provider) <USER>")
             user?.getTokenWithCompletion({ (token, error) in
                 if let _ = error {
@@ -144,6 +141,18 @@ class ViewController: UIViewController {
             print("user: \(user?.email!)")
             
         })
+
+    }
+    
+    fileprivate func logOut() {
+        do {
+            try FIRAuth.auth()?.signOut()
+            self.title = ""
+            // vamos a cambiar el texto del boton login/out en funcion del estado
+            loginOutBtn.title = "login"
+        } catch let error {
+            print("\(error.localizedDescription)")
+        }
 
     }
 
