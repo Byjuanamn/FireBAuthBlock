@@ -9,8 +9,11 @@
 import UIKit
 import Firebase
 
+
+
 class ViewController: UIViewController {
 
+    @IBOutlet weak var loginOutBtn: UIBarButtonItem!
     var handle: FIRAuthStateDidChangeListenerHandle!
 
     override func viewDidLoad() {
@@ -41,22 +44,14 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func registerUser(_ sender: Any) {
+        showUserLoginDialog(withCommand: createNewUser)
+    }
     @IBAction func signinMailPass(_ sender: Any) {
-        showUserLoginDialog()
     }
     
     @IBAction func loginUser(_ sender: Any) {
-        FIRAuth.auth()?.signIn(withEmail: "juan@midominio.com", password: "12345678", completion: { (
-            user, error) in
-            
-            if let _ = error {
-                print("tenemos un error -> \(error?.localizedDescription)")
-                return
-            }
-            print("user: \(user?.email!)")
-            
-        })
-    
+        showUserLoginDialog(withCommand: login)
     }
     @IBAction func logOut(_ sender: Any) {
         do {
@@ -86,8 +81,8 @@ class ViewController: UIViewController {
             })
         }
     }
-    
-    fileprivate func showUserLoginDialog() {
+    typealias actionUserCmd = ((_ : String, _ : String) -> Void)
+    fileprivate func showUserLoginDialog(withCommand actionAuth: @escaping actionUserCmd) {
         let alertController = UIAlertController(title: "FireFireExample", message: "Login", preferredStyle: .alert)
         
         alertController.addAction(UIAlertAction(title: "Login", style: .default, handler: { (action) in
@@ -98,7 +93,8 @@ class ViewController: UIViewController {
                 // no hacemos nada
             } else {
                 // tratamos los datos
-                self.createNewUser(eMailtxt.text!, andPass: passTxt.text!)
+                actionAuth(eMailtxt.text!, passTxt.text!)
+                //self.createNewUser(eMailtxt.text!, andPass: passTxt.text!)
             }
         }))
         
@@ -119,7 +115,10 @@ class ViewController: UIViewController {
         
         self.present(alertController, animated: true, completion: nil)
     }
-    
+    /// [createNewUser]: Metodo crear un usuario nuevo, basado en email/password
+    /// - name: email del usuario
+    /// - pass: Password del usuario
+    /// - Returns: Void
     fileprivate func createNewUser(_ name: String, andPass pass: String) {
         FIRAuth.auth()?.createUser(withEmail: name, password: pass, completion: { (user, error) in
             if let _ = error {
@@ -128,6 +127,20 @@ class ViewController: UIViewController {
             }
             
             print("\(user)")
+        })
+
+    }
+    
+    fileprivate func login(_ name: String, andPass pass: String) {
+        FIRAuth.auth()?.signIn(withEmail: "juan@midominio.com", password: "12345678", completion: { (
+            user, error) in
+            
+            if let _ = error {
+                print("tenemos un error -> \(error?.localizedDescription)")
+                return
+            }
+            print("user: \(user?.email!)")
+            
         })
 
     }

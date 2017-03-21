@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,15 +21,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Zv-8e-8Xk">
-                                <rect key="frame" x="63" y="219" width="249" height="30"/>
-                                <state key="normal" title="Create user with Mail/Pass"/>
-                                <connections>
-                                    <action selector="signinMailPass:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QOp-HS-0vn"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCa-y5-OR4">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCa-y5-OR4">
                                 <rect key="frame" x="63" y="263" width="249" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Sign in"/>
                                 <connections>
                                     <action selector="loginUser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hBX-Yk-tcl"/>
@@ -49,18 +42,21 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="TCa-y5-OR4" firstAttribute="leading" secondItem="6Zv-8e-8Xk" secondAttribute="leading" id="Ett-Ae-SqT"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="6Zv-8e-8Xk" secondAttribute="trailing" constant="47" id="IJa-eU-hXl"/>
                             <constraint firstItem="aPb-D3-uzT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ae8-bJ-dXV"/>
-                            <constraint firstItem="TCa-y5-OR4" firstAttribute="top" secondItem="6Zv-8e-8Xk" secondAttribute="bottom" constant="14" id="h5c-D8-C5q"/>
-                            <constraint firstItem="6Zv-8e-8Xk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="47" id="os4-Oa-seZ"/>
                             <constraint firstAttribute="trailing" secondItem="aPb-D3-uzT" secondAttribute="trailing" id="rgq-Ij-uxI"/>
-                            <constraint firstItem="TCa-y5-OR4" firstAttribute="trailing" secondItem="6Zv-8e-8Xk" secondAttribute="trailing" id="tBM-Dq-W6g"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="aPb-D3-uzT" secondAttribute="bottom" id="wuH-dx-slw"/>
-                            <constraint firstItem="6Zv-8e-8Xk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="155" id="z1x-EW-gB9"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Zvu-z7-hiO"/>
+                    <navigationItem key="navigationItem" id="Zvu-z7-hiO">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="Wdt-Hh-Bd4">
+                            <connections>
+                                <action selector="registerUser:" destination="BYZ-38-t0r" id="TVN-SP-kG9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="loginOutBtn" destination="8zl-Ot-I0L" id="2An-Or-pQF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
