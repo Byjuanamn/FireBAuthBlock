@@ -9,7 +9,10 @@
 import UIKit
 import Firebase
 
-
+enum ActionUser: String {
+    case toLogin = "Login"
+    case toSignIn = "Registrar nuevo usuario"
+}
 
 class ViewController: UIViewController {
 
@@ -45,13 +48,13 @@ class ViewController: UIViewController {
     }
 
     @IBAction func registerUser(_ sender: Any) {
-        showUserLoginDialog(withCommand: createNewUser)
+        showUserLoginDialog(withCommand: createNewUser, userAction: .toSignIn)
     }
     @IBAction func signinMailPass(_ sender: Any) {
     }
     
     @IBAction func loginUser(_ sender: Any) {
-        showUserLoginDialog(withCommand: login)
+        showUserLoginDialog(withCommand: login, userAction: .toLogin)
     }
     @IBAction func logOut(_ sender: Any) {
         do {
@@ -82,10 +85,10 @@ class ViewController: UIViewController {
         }
     }
     typealias actionUserCmd = ((_ : String, _ : String) -> Void)
-    fileprivate func showUserLoginDialog(withCommand actionAuth: @escaping actionUserCmd) {
-        let alertController = UIAlertController(title: "FireFireExample", message: "Login", preferredStyle: .alert)
+    fileprivate func showUserLoginDialog(withCommand actionAuth: @escaping actionUserCmd, userAction: ActionUser) {
+        let alertController = UIAlertController(title: "FireFireExample", message: userAction.rawValue, preferredStyle: .alert)
         
-        alertController.addAction(UIAlertAction(title: "Login", style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: userAction.rawValue, style: .default, handler: { (action) in
             let eMailtxt = (alertController.textFields?[0])! as UITextField
             let passTxt = (alertController.textFields?[1])! as UITextField
             
@@ -94,7 +97,6 @@ class ViewController: UIViewController {
             } else {
                 // tratamos los datos
                 actionAuth(eMailtxt.text!, passTxt.text!)
-                //self.createNewUser(eMailtxt.text!, andPass: passTxt.text!)
             }
         }))
         
